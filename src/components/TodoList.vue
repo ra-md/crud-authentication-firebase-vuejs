@@ -7,8 +7,9 @@
 </template>
 
 <script>
-import TodoItem from './TodoItem.vue';
 import { todoCollection } from '@/firebase.js';
+
+import TodoItem from './TodoItem.vue';
 
 export default {
   components: {
@@ -20,8 +21,11 @@ export default {
     }
   },
   created() {
-      todoCollection.onSnapshot(querySnapshot => {
 
+      todoCollection.onSnapshot(querySnapshot => {  
+        
+        this.todos = []
+        
         querySnapshot.docs.forEach(doc => {
           let obj = {
             id: doc.id,
@@ -29,7 +33,7 @@ export default {
             completed: doc.data().completed
           }
 
-          this.todos.unshift(obj)
+          this.todos.push(obj)
         })
 
       })

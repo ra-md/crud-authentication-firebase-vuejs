@@ -12,7 +12,9 @@ const config = {
 	appId: "1:61529289410:web:e6a43fdff2f11ecede015b"
 };
 
+
 // Initialize Firebase
 firebase.initializeApp(config); 
 
 export const todoCollection = firebase.firestore().collection('todos');
+// export default firebase
