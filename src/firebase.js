@@ -2,7 +2,7 @@ import firebase from 'firebase/app';
 import 'firebase/firestore'
 
 // Your web app's Firebase configuration
-var config = {
+const config = {
 	apiKey: "AIzaSyD9Ee_jrXJCqaENmR7IRd3_u_wcaTPUAg8",
 	authDomain: "crud-auth-d925b.firebaseapp.com",
 	databaseURL: "https://crud-auth-d925b.firebaseio.com",
