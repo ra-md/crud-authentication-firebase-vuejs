@@ -1,9 +1,7 @@
 <template>
 	<div>
-		<form>
-			<input type="text" v-model="title">
-			<input type="button" @click.prevent="addTodo" value="add">
-		</form>
+		<input type="text" v-model="title" @keyup.enter="addTodo">
+		<button @click.prevent="addTodo">add</button>
 	</div>
 </template>
 <script>
@@ -16,9 +14,15 @@
 			}
 		},
 		methods: {
+			date() {
+				const date = new Date()
+				return date
+			},
 			addTodo() {
+
 				let newTodo = {
 					title: this.title,
+					date: this.date(),
 					completed: false
 				}
 
