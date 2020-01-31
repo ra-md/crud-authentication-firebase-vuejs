@@ -21,8 +21,7 @@ export default {
     }
   },
   created() {
-
-      todoCollection.onSnapshot(querySnapshot => {  
+      todoCollection.orderBy('date', 'desc').onSnapshot(querySnapshot => {  
         
         this.todos = []
         
