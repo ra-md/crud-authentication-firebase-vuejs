@@ -1,15 +1,20 @@
 <template>
-	<div>
-		<div v-if="isOpenInput">
-			<h1 :class="{'isCompleted': todo.completed}">{{ todo.title }}</h1>
+	<div class="flex">
+		<div class="left">
+			<div class="flex" v-if="isOpenInput">
+				<input @click="updateCheckbox" type="checkbox" :checked="todo.completed">
+				<h3 class="title" :class="{'is-completed': todo.completed}">{{ todo.title }}</h3>
+			</div>
+			<div v-else>
+				<button @click="updateTitle">update</button>
+				<input type="text" v-model="title" @keyup.enter="updateTitle">
+			</div>
 		</div>
-		<div v-else>
-			<input type="text" v-model="title" @keyup.enter="updateTitle">
-			<button @click="updateTitle">update</button>
+
+		<div class="right">
+			<button @click="openInput">gambar pengsil</button>
+			<button @click="deleteTodo">gambar tongsampah</button>
 		</div>
-		<input @click="updateCheckbox" type="checkbox" :checked="todo.completed">
-		<button @click="openInput">gambar pengsil</button>
-		<button @click="deleteTodo">gambar tongsampah</button>
 	</div>
 </template>
 
@@ -54,8 +59,23 @@
 	}
 </script>
 
-<style> 
-	.isCompleted {
+<style scoped> 
+	.flex {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+	}
+
+	.is-completed {
 		text-decoration: line-through;
+	}
+
+	.title {
+		margin: 0;
+		padding: 0 1em;
+	}
+
+	.right {
+		margin: 1em 0;
 	}
 </style>
