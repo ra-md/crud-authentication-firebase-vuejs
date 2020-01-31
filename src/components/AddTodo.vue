@@ -1,7 +1,7 @@
 <template>
 	<div>
 		<input type="text" v-model="title" @keyup.enter="addTodo">
-		<button @click.prevent="addTodo">add</button>
+		<button @click.prevent="addTodo"><i class="fas fa-plus fa-xs"></i></button>
 	</div>
 </template>
 <script>

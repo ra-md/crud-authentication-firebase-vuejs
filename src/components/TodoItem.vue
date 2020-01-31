@@ -1,11 +1,11 @@
 <template>
 	<div class="flex">
 		<div class="left">
-			<div class="flex" v-if="isOpenInput">
+			<div v-if="isOpenInput">
 				<input @click="updateCheckbox" type="checkbox" :checked="todo.completed">
 			</div>
 			<div v-else>
-				<button @click="updateTitle">update</button>
+				<button @click="updateTitle"><i class="fas fa-check fa-xs"></i></button>
 			</div>
 		</div>
 
@@ -19,8 +19,8 @@
 		</div>
 
 		<div class="right">
-			<button @click="openInput">gambar pengsil</button>
-			<button @click="deleteTodo">gambar tongsampah</button>
+			<button @click="openInput"><i class="fas fa-pen fa-xs"></i></button>
+			<button @click="deleteTodo"><i class="fas fa-trash fa-xs"></i></button>
 		</div>
 	</div>
 </template>
@@ -82,7 +82,15 @@
 		padding: 0 1em;
 	}
 
+	.center input {
+		text-align: center;
+	}
+
 	.right {
 		margin: 1em 0;
+	}
+
+	.right button {
+		padding: 5px;
 	}
 </style>
