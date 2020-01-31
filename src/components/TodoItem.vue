@@ -3,10 +3,17 @@
 		<div class="left">
 			<div class="flex" v-if="isOpenInput">
 				<input @click="updateCheckbox" type="checkbox" :checked="todo.completed">
-				<h3 class="title" :class="{'is-completed': todo.completed}">{{ todo.title }}</h3>
 			</div>
 			<div v-else>
 				<button @click="updateTitle">update</button>
+			</div>
+		</div>
+
+		<div class="center">
+			<div v-if="isOpenInput">
+				<h3 class="title" :class="{'is-completed': todo.completed}">{{ todo.title }}</h3>
+			</div>
+			<div v-else>
 				<input type="text" v-model="title" @keyup.enter="updateTitle">
 			</div>
 		</div>
