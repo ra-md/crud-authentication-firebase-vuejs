@@ -19,20 +19,23 @@ export default {
 </script>
 
 <style>
-  button {
-    font-size: 1.25em;
-    border: none;
-    background: none;
-    outline-color: #2196F3;
-  }
+	body {
+		margin: auto;
+  		max-width: 768px;
+	}
 
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin: auto;
-  width: 720px;
-}
+	button {
+    	font-size: 1.25em;
+    	border: none;
+	    background: none;
+	    outline-color: #2196F3;
+	}
+
+	#app {
+  		font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  		-webkit-font-smoothing: antialiased;
+  		-moz-osx-font-smoothing: grayscale;
+  		text-align: center;
+  		padding: 0 1em;
+	}
 </style>

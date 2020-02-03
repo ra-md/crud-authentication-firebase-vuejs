@@ -1,7 +1,7 @@
 <template>
 	<div class="flex">
 		<div class="left">
-			<div v-if="isOpenInput">
+			<div v-if="openInput">
 				<input @click="updateCheckbox" type="checkbox" :checked="todo.completed">
 			</div>
 			<div v-else>
@@ -10,7 +10,7 @@
 		</div>
 
 		<div class="center">
-			<div v-if="isOpenInput">
+			<div v-if="openInput">
 				<h3 class="title" :class="{'is-completed': todo.completed}">{{ todo.title }}</h3>
 			</div>
 			<div v-else>
@@ -19,7 +19,7 @@
 		</div>
 
 		<div class="right">
-			<button @click="openInput"><i class="fas fa-pen fa-xs"></i></button>
+			<button @click="openInput = !openInput"><i class="fas fa-pen fa-xs"></i></button>
 			<button @click="deleteTodo"><i class="fas fa-trash fa-xs"></i></button>
 		</div>
 	</div>
@@ -35,16 +35,13 @@
 		data() {
 			return {
 				title: this.todo.title,
-				isOpenInput: true,
+				openInput: true,
 				todoDataWithId: todoCollection.doc(this.todo.id)
 			}
 		},
 		methods: {
 			date() {
 				return new Date()
-			},
-			openInput() {
-				this.isOpenInput = !this.isOpenInput
 			},
 			updateCheckbox() {
 				this.todoDataWithId.update({
@@ -57,10 +54,10 @@
 					title: this.title
 				})
 
-				this.isOpenInput = !this.isOpenInput
+				this.openInput = !this.openInput
 			},
 			deleteTodo() {
-				todoCollection.doc(this.todo.id).delete()	
+				this.todoDataWithId.delete()	
 			}
 		}
 	}

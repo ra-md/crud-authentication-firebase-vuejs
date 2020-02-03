@@ -1,7 +1,12 @@
 <template>
-  <div>
-    <div v-for="todo in todos" :key="todo.id">
-      <TodoItem :todo="todo"/>
+  <div class="todoListStyle">
+    <div v-if="loading">
+      <p>loading...</p>
+    </div>
+    <div v-else>
+      <div v-for="todo in todos" :key="todo.id">
+        <TodoItem :todo="todo"/>
+      </div>
     </div>
   </div>
 </template>
@@ -17,7 +22,8 @@ export default {
   },
   data() {
     return {
-      todos: []
+      todos: [],
+      loading: true
     }
   },
   created() {
@@ -26,6 +32,8 @@ export default {
         this.todos = []
         
         querySnapshot.docs.forEach(doc => {
+          this.loading = false
+          
           let obj = {
             id: doc.id,
             title: doc.data().title,
