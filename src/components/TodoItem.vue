@@ -49,12 +49,16 @@
 				})
 			},
 			updateTitle() {
-				this.todoDataWithId.update({
-					date: this.date(),
-					title: this.title
-				})
 
-				this.openInput = !this.openInput
+				if(/\S/.test(this.title)) {
+					this.todoDataWithId.update({
+						date: this.date(),
+						title: this.title
+					})
+
+					this.openInput = !this.openInput
+				}
+
 			},
 			deleteTodo() {
 				this.todoDataWithId.delete()	
@@ -77,6 +81,10 @@
 	.title {
 		margin: 0;
 		padding: 0 1em;
+	}
+
+	.center h3 {
+		word-break: break-all;
 	}
 
 	.center input {

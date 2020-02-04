@@ -47,3 +47,10 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+  .todoListStyle {
+    padding: 0.5em 0;
+    width: 100%;
+  }
+</style>

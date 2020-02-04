@@ -36,6 +36,10 @@ export default {
   		-webkit-font-smoothing: antialiased;
   		-moz-osx-font-smoothing: grayscale;
   		text-align: center;
-  		padding: 0 1em;
+  		padding: 1.5em;
+  		display: flex;
+    	flex-direction: column;
+    	justify-content: center;
+    	align-items: center;
 	}
 </style>
