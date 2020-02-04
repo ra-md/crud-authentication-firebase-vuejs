@@ -3,13 +3,13 @@ import 'firebase/firestore'
 
 // Your web app's Firebase configuration
 const config = {
-	apiKey: "AIzaSyD9Ee_jrXJCqaENmR7IRd3_u_wcaTPUAg8",
-	authDomain: "crud-auth-d925b.firebaseapp.com",
-	databaseURL: "https://crud-auth-d925b.firebaseio.com",
-	projectId: "crud-auth-d925b",
-	storageBucket: "crud-auth-d925b.appspot.com",
-	messagingSenderId: "61529289410",
-	appId: "1:61529289410:web:e6a43fdff2f11ecede015b"
+	apiKey: "API_KEY",
+	authDomain: "AUTH_DOMAIN",
+	databaseURL: "DATABASE_URL",
+	projectId: "PROJECT_ID",
+	storageBucket: "STORAGE_BUCKET_ID",
+	messagingSenderId: "MESSAGING_SENDER_ID",
+	appId: "APP_ID"
 };
 
 
