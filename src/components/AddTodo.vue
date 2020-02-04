@@ -40,6 +40,7 @@
 	button {
 		padding: 0 0.5em;
 		height: 100%;
+		line-height: 50%;
 	}
 
 	input {
