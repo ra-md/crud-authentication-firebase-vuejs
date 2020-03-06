@@ -1,56 +1,20 @@
 <template>
-  <div class="todoListStyle">
-    <div v-if="loading">
-      <p>loading...</p>
-    </div>
-    <div v-else>
-      <div v-for="todo in todos" :key="todo.id">
-        <TodoItem :todo="todo"/>
-      </div>
-    </div>
-  </div>
+	<div>
+		<v-list class="py-1" flat v-for="todo in todos" :key="todo.id">
+			<TodoItem :id="todo.id" :title="todo.title" :completed="todo.completed"/>
+		</v-list>
+	</div>
 </template>
 
 <script>
-import { todoCollection } from '@/firebase.js';
+	import TodoItem from './TodoItem.vue'
 
-import TodoItem from './TodoItem.vue';
-
-export default {
-  components: {
-    TodoItem
-  },
-  data() {
-    return {
-      todos: [],
-      loading: true
-    }
-  },
-  created() {
-      todoCollection.orderBy('date', 'desc').onSnapshot(querySnapshot => {  
-        
-        this.todos = []
-        
-        querySnapshot.docs.forEach(doc => {
-          this.loading = false
-          
-          let obj = {
-            id: doc.id,
-            title: doc.data().title,
-            completed: doc.data().completed
-          }
-
-          this.todos.push(obj)
-        })
-
-      })
-  }
-}
+	export default {
+		props: {
+			todos: Array
+		},
+		components: {
+			TodoItem
+		}
+	}
 </script>
-
-<style scoped>
-  .todoListStyle {
-    padding: 0.5em 0;
-    width: 100%;
-  }
-</style>
