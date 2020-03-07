@@ -1,7 +1,11 @@
 <template>
 	<div>
 		<v-list class="py-1" flat v-for="todo in todos" :key="todo.id">
-			<TodoItem :id="todo.id" :title="todo.title" :completed="todo.completed"/>
+			<TodoItem 
+				:titleFromTodoList="todo.title" 
+				:idFromTodoList="todo.id" 
+				:completedFromTodoList="todo.completed"
+			/>
 		</v-list>
 	</div>
 </template>

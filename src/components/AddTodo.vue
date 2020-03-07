@@ -18,22 +18,24 @@
 		data() {
 			return {
 				text: '',
-				user: firebase.auth().currentUser
 			}
 		},
 		methods: {
 			addTodo() {
-				firebase.firestore().collection('userCollection')
-				.doc(this.user.uid).collection('todos').doc().set({
-					title: this.text,
-					date: new Date(),
-					completed: false
-				})
-				.catch(err => {
-					console.log(err)
-				})
+				firebase.auth().onAuthStateChanged(user => {
 
-				this.text = ''
+					firebase.firestore().collection('userCollection')
+					.doc(user.uid).collection('todos').doc().set({
+						title: this.text,
+						date: new Date(),
+						completed: false
+					})
+					.catch(err => {
+						console.log(err)
+					})
+
+					this.text = ''
+				})
 			}
 		}
 	}
