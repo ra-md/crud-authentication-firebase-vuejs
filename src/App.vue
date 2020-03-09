@@ -1,6 +1,7 @@
 <template>
   <v-app>
-    <v-container class="fill-height">
+    <Header/>
+    <v-container class="fill-height mt-7">
       <v-row no-gutters justify="center">
         <v-col align="center" sm="6" md="4">
           <router-view/>
@@ -11,8 +12,11 @@
 </template>
 
 <script>
+  import Header from './components/Header.vue'
 
 	export default {
-		components: {}
+		components: {
+      Header
+    }
 	}
 </script>

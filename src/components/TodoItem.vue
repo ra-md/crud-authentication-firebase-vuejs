@@ -50,13 +50,15 @@
 				todo: ''
 			}
 		},
-		created() {
+		mounted() {
 			firebase.auth().onAuthStateChanged(user => {
-				this.todo = firebase.firestore().collection('userCollection').doc(user.uid).collection('todos').doc(this.idFromTodoList)
+				if(user) {
+					this.todo = firebase.firestore().collection('userCollection').doc(user.uid).collection('todos').doc(this.idFromTodoList)
+				}
 			})
 		},
 		watch: {
-			isCompleted() {
+			completed() {
 				this.todo.update({
 					completed: this.completed
 				})

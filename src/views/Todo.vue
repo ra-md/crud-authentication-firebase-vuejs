@@ -4,7 +4,6 @@
 		<v-card height="400">
 			<div class="center-y" v-if="isLoading">
 				<v-progress-circular
-			    		
 			    	indeterminate
 			    	color="primary"
 			    ></v-progress-circular>
@@ -32,25 +31,26 @@
 			AddTodo,
 			TodoList
 		},
-		created() {
+		mounted() {
 			firebase.auth().onAuthStateChanged(user => {
-				
-				firebase.firestore().collection('userCollection')
-				.doc(user.uid).collection('todos').orderBy('date', 'desc').onSnapshot(querySnapshot => {
+				if(user) {
 
-					this.todos = []
-					
-					querySnapshot.docs.forEach(todo => {
-						this.isLoading = false
-						let obj = {
-							id: todo.id,
-							title: todo.data().title,
-							completed: todo.data().completed
-						}
-						this.todos.push(obj)
+					firebase.firestore().collection('userCollection')
+					.doc(user.uid).collection('todos').orderBy('date', 'desc').onSnapshot(querySnapshot => {
+
+						this.todos = []
+						
+						querySnapshot.docs.forEach(todo => {
+							this.isLoading = false
+							let obj = {
+								id: todo.id,
+								title: todo.data().title,
+								completed: todo.data().completed
+							}
+							this.todos.push(obj)
+						})
 					})
-				})
-
+				}
 			})
 		}
 	}

@@ -2,8 +2,8 @@
 		<v-card class="pa-3">
 			<v-form class="mb-5">
 				<h2 class="mb-3">{{changeName}}</h2>
-				<v-text-field label="email" dense outlined v-model="email"></v-text-field>
-				<v-text-field label="password" dense outlined v-model="password"></v-text-field>
+				<v-text-field type="email" label="email" dense outlined v-model="email"></v-text-field>
+				<v-text-field type="password" label="password" dense outlined v-model="password"></v-text-field>
 				<v-btn block @click="switchToSignup ? signUp() : signIn()">{{changeName}}</v-btn>
 			</v-form>
 			<div class="grid">
@@ -14,28 +14,57 @@
 </template>
 
 <script>
-	import signInFunction from '@/components/signInFunction.js'
-	import signUpFunction from '@/components/signUpFunction.js'
+	import firebase from '@/firebase.js'
+	import { mapGetters, mapActions } from 'vuex'
 
 	export default {
 		data() {
 			return {
 				email: '',
 				password: '',
-				switchToSignup: false
+				switchToSignup: false,
+				auth: firebase.auth()
 			}
 		},
 		computed: {
 			changeName() {
 				return this.switchToSignup ? 'SignUp' : 'SignIn'
+			},
+			...mapGetters([
+				'user'
+			])
+		},
+		watch: {
+			user() {
+				console.log(this.user)
 			}
 		},
 		methods: {
 			signIn() {
-				signInFunction(this.email, this.password, () => this.$router.push('/todo'))
+				// this.auth.signInWithEmailAndPassword(this.email, this.password)
+				// .then(() => {
+				// 	this.$router.push('/todo')
+				// })
+				// .catch(err => {
+				// 	console.log(err)
+				// })
+
+				const obj = {
+					email: this.email,
+					password: this.password
+				}
+
+				this.$store.dispatch('signInUser', obj)
 			},
 			signUp() {
-				signUpFunction(this.email, this.password, () => this.$router.push('/todo'))
+				this.auth.createUserWithEmailAndPassword(this.email, this.password)
+				.then(() => {
+					firebase.firestore().collection('userCollection').doc(this.auth.currentUser.uid).set({})
+					this.$router.push('/todo')
+				})
+				.catch(err => {
+					console.log(err)
+				})
 			}
 		}
 	}
