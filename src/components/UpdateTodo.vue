@@ -35,7 +35,8 @@
 
 	export default {
 		props: {
-			todo: Object
+			todo: Object,
+			documentReference: Object
 		},
 		data() {
 			return {
@@ -45,12 +46,10 @@
 		},
 		methods: {
 			updateTodo() {
-				firebase.auth().onAuthStateChanged(user => {
-					firebase.firestore().collection('userCollection').doc(user.uid).collection('todos').doc(this.todo.id).update({
-						title: this.title,
-						completed: this.todo.completed,
-						date: new Date()
-					})
+				this.documentReference.update({
+					title: this.title,
+					completed: this.todo.completed,
+					date: new Date()
 				})
 
 				this.modal = false

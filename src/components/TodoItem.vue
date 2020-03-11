@@ -21,10 +21,7 @@
 			</v-list-item>
 		</v-list-item-group>
 
-		<UpdateTodo 
-			ref="modal" 
-			:todo="todo"
-		/>
+		<UpdateTodo ref="modal" :todo="todo" :documentReference="documentReference"/>
 	</div>
 </template>
 
@@ -43,26 +40,26 @@
 		data() {
 			return {
 				completed: this.todo.completed,
-				userTodo: ''
+				documentReference: null
 			}
 		},
-		mounted() {
+		created() {
 			firebase.auth().onAuthStateChanged(user => {
 				if(user) {
-					this.userTodo = firebase.firestore().collection('userCollection').doc(user.uid).collection('todos').doc(this.todo.id)
+					this.documentReference = firebase.firestore().collection('userCollection').doc(user.uid).collection('todos').doc(this.todo.id)
 				}
 			})
 		},
 		watch: {
 			completed() {
-				this.userTodo.update({
+				this.documentReference.update({
 					completed: this.completed
 				})
 			}
 		},
 		methods: {
 			deleteTodo() {
-				this.userTodo.delete()
+				this.documentReference.delete()
 			},
 			openModal() {
 				this.$refs.modal.showModal() 

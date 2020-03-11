@@ -15,7 +15,6 @@
 
 <script>
 	import firebase from '@/firebase.js'
-	import { mapGetters, mapActions } from 'vuex'
 
 	export default {
 		data() {
@@ -28,16 +27,8 @@
 		},
 		computed: {
 			changeName() {
-				return this.switchToSignup ? 'SignUp' : 'SignIn'
+				return this.switchToSignup ? 'Sign Up' : 'Sign In'
 			},
-			...mapGetters([
-				'user'
-			])
-		},
-		watch: {
-			user() {
-				console.log(this.user)
-			}
 		},
 		methods: {
 			signIn() {
