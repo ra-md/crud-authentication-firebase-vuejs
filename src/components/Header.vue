@@ -10,7 +10,7 @@
 			hide-details 
 			v-model="dark" 
 			inset
-			:label="dark ? 'light':'dark'"
+			label="dark mode"
 			class="ma-0"
 		></v-switch>
 		<v-spacer></v-spacer>
@@ -34,7 +34,12 @@
 				showSignOut: false
 			}
 		},
-		mounted() {
+		watch: {
+			dark() {
+				this.$vuetify.theme.dark = this.dark
+			}
+		},
+		created() {
 			firebase.auth().onAuthStateChanged(user => {
 				if(user) {
 					this.showSignOut = true
