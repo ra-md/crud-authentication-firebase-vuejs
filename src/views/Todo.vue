@@ -9,7 +9,9 @@
 			    ></v-progress-circular>
 			</div>
 			<div v-else>
-				<TodoList :todos="todos"/>
+				<v-list class="py-1" flat v-for="todo in todos" :key="todo.id">
+					<TodoItem :todo="todo"/>
+				</v-list>
 			</div>
 		</v-card>
 	</div>
@@ -17,7 +19,7 @@
 
 <script>
 	import AddTodo from '@/components/AddTodo.vue'
-	import TodoList from '@/components/TodoList.vue'
+	import TodoItem from '@/components/TodoItem.vue'
 	import firebase from '@/firebase.js'
 
 	export default {
@@ -29,9 +31,9 @@
 		},
 		components: {
 			AddTodo,
-			TodoList
+			TodoItem
 		},
-		mounted() {
+		created() {
 			firebase.auth().onAuthStateChanged(user => {
 				if(user) {
 

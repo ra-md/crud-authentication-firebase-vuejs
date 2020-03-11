@@ -6,7 +6,7 @@
 					<v-checkbox v-model="completed"></v-checkbox>
 				</v-list-item-action>
 				<v-list-item-content>
-					<v-list-item-title :class="{'line-through': completed}" v-text="titleFromTodoList"></v-list-item-title>
+					<v-list-item-title :class="{'line-through': completed}" v-text="todo.title"></v-list-item-title>
 				</v-list-item-content>
 				<v-list-item-action class="ml-1">
 					<v-btn icon @click="openModal">
@@ -23,9 +23,7 @@
 
 		<UpdateTodo 
 			ref="modal" 
-			:titleFromTodoItem="titleFromTodoList" 
-			:idFromTodoItem="idFromTodoList" 
-			:completedFromTodoItem="completed"
+			:todo="todo"
 		/>
 	</div>
 </template>
@@ -37,36 +35,34 @@
 
 	export default {
 		props: {
-			titleFromTodoList: String,
-			idFromTodoList: String,
-			completedFromTodoList: Boolean
+			todo: Object
 		},
 		components: {
 			UpdateTodo
 		},
 		data() {
 			return {
-				completed: this.completedFromTodoList,
-				todo: ''
+				completed: this.todo.completed,
+				userTodo: ''
 			}
 		},
 		mounted() {
 			firebase.auth().onAuthStateChanged(user => {
 				if(user) {
-					this.todo = firebase.firestore().collection('userCollection').doc(user.uid).collection('todos').doc(this.idFromTodoList)
+					this.userTodo = firebase.firestore().collection('userCollection').doc(user.uid).collection('todos').doc(this.todo.id)
 				}
 			})
 		},
 		watch: {
 			completed() {
-				this.todo.update({
+				this.userTodo.update({
 					completed: this.completed
 				})
 			}
 		},
 		methods: {
 			deleteTodo() {
-				this.todo.delete()
+				this.userTodo.delete()
 			},
 			openModal() {
 				this.$refs.modal.showModal() 

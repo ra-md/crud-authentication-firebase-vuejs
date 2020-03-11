@@ -41,20 +41,13 @@
 		},
 		methods: {
 			signIn() {
-				// this.auth.signInWithEmailAndPassword(this.email, this.password)
-				// .then(() => {
-				// 	this.$router.push('/todo')
-				// })
-				// .catch(err => {
-				// 	console.log(err)
-				// })
-
-				const obj = {
-					email: this.email,
-					password: this.password
-				}
-
-				this.$store.dispatch('signInUser', obj)
+				this.auth.signInWithEmailAndPassword(this.email, this.password)
+				.then(() => {
+					this.$router.push('/todo')
+				})
+				.catch(err => {
+					console.log(err)
+				})
 			},
 			signUp() {
 				this.auth.createUserWithEmailAndPassword(this.email, this.password)
