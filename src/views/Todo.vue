@@ -42,8 +42,8 @@
 
 						this.todos = []
 						
+						this.isLoading = false
 						querySnapshot.docs.forEach(todo => {
-							this.isLoading = false
 							let obj = {
 								id: todo.id,
 								title: todo.data().title,
@@ -54,7 +54,10 @@
 					})
 				}
 			})
-		}
+		},
+		// destroyed() {
+		// 	this.todos = []
+		// }
 	}
 </script>
 

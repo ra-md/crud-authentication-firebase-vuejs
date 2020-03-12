@@ -2,8 +2,23 @@
 		<v-card class="pa-3">
 			<v-form class="mb-5">
 				<h2 class="mb-3">{{changeName}}</h2>
-				<v-text-field type="email" label="email" dense outlined v-model="email"></v-text-field>
-				<v-text-field type="password" label="password" dense outlined v-model="password"></v-text-field>
+				<p class="font-weight-light mb-3 red--text" v-show="errorMessage">{{ error.message }}</p>
+				<v-text-field 
+					type="email" 
+					label="email" 
+					dense 
+					outlined 
+					v-model="email"
+					:error-messages="emailErrorMessage"
+				></v-text-field>
+				<v-text-field 
+					type="password" 
+					label="password" 
+					dense 
+					outlined 
+					v-model="password"
+					:error-messages="passwordErrorMessage"
+				></v-text-field>
 				<v-btn block @click="switchToSignup ? signUp() : signIn()">{{changeName}}</v-btn>
 			</v-form>
 			<div class="grid">
@@ -21,14 +36,31 @@
 			return {
 				email: '',
 				password: '',
+				error: {},
 				switchToSignup: false,
-				auth: firebase.auth()
+				auth: firebase.auth(),
 			}
 		},
 		computed: {
 			changeName() {
 				return this.switchToSignup ? 'Sign Up' : 'Sign In'
 			},
+			errorMessage() {
+				return this.error.code === 'auth/user-not-found' || this.error.code === 'auth/email-already-in-use'
+			},
+			passwordErrorMessage() {
+				return this.error.code === 'auth/wrong-password' || this.error.code === 'auth/weak-password' ? this.error.message : ''
+			},
+			emailErrorMessage() {
+				return this.error.code === 'auth/invalid-email' ? this.error.message : ''
+			}
+		},
+		watch: {
+			switchToSignup() {
+				this.email = ''
+				this.password = ''
+				this.error = {}
+			}
 		},
 		methods: {
 			signIn() {
@@ -36,8 +68,9 @@
 				.then(() => {
 					this.$router.push('/todo')
 				})
-				.catch(err => {
-					console.log(err)
+				.catch(error => {
+					this.error = error
+					console.log(error)
 				})
 			},
 			signUp() {
@@ -46,8 +79,9 @@
 					firebase.firestore().collection('userCollection').doc(this.auth.currentUser.uid).set({})
 					this.$router.push('/todo')
 				})
-				.catch(err => {
-					console.log(err)
+				.catch(error => {
+					this.error = error
+					console.log(error)
 				})
 			}
 		}
