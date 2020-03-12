@@ -1,45 +1,22 @@
 <template>
-  <div id="app">
-    <AddTodo />
-    <TodoList />
-  </div>
+  <v-app>
+    <Header/>
+    <v-container class="fill-height mt-7">
+      <v-row no-gutters justify="center">
+        <v-col align="center" sm="6" md="4">
+          <router-view/>
+        </v-col>
+      </v-row>
+    </v-container>
+  </v-app>
 </template>
 
 <script>
-import TodoList from './components/TodoList.vue'
-import AddTodo from './components/AddTodo.vue';
+  import Header from './components/Header.vue'
 
-export default {
-  name: 'app',
-  components: {
-    AddTodo,
-    TodoList
-  }
-}
+	export default {
+		components: {
+      Header
+    }
+	}
 </script>
-
-<style>
-	body {
-		margin: auto;
-  		max-width: 768px;
-	}
-
-	button {
-    	font-size: 1.25em;
-    	border: none;
-	    background: none;
-	    outline-color: #2196F3;
-	}
-
-	#app {
-  		font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  		-webkit-font-smoothing: antialiased;
-  		-moz-osx-font-smoothing: grayscale;
-  		text-align: center;
-  		padding: 1.5em;
-  		display: flex;
-    	flex-direction: column;
-    	justify-content: center;
-    	align-items: center;
-	}
-</style>

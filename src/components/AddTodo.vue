@@ -1,62 +1,50 @@
 <template>
-	<div class="addTodoStyle">
-		<input type="text" v-model="title" @keyup.enter="addTodo" placeholder="add todo...">
-		<button @click.prevent="addTodo"><i class="fas fa-plus fa-xs"></i></button>
-	</div>
+	<v-card class="mb-2">
+			<v-text-field
+				v-model="text"
+				class="pa-2"
+				placeholder="add todo..."
+				hide-details
+				append-outer-icon="mdi-plus"
+				@click:append-outer="addTodo"
+				:rules="[rules]"
+			></v-text-field>
+	</v-card>
 </template>
+
 <script>
-	import { todoCollection } from '@/firebase.js'
+	import firebase from '@/firebase.js'
 
 	export default {
 		data() {
 			return {
-				title: ''
+				text: '',
+				rules: value => {
+					return /\S/.test(value)
+				}
+			}
+		},
+		computed: {
+			notEmpty() {
+				return /\S/.test(this.text)
 			}
 		},
 		methods: {
-			date() {
-				const date = new Date()
-				return date
-			},
 			addTodo() {
+				firebase.auth().onAuthStateChanged(user => {
 
-				let newTodo = {
-					title: this.title,
-					date: this.date(),
-					completed: false
-				}
+					if(user && this.notEmpty) {
+						firebase.firestore().collection('userCollection')
+						.doc(user.uid).collection('todos').doc().set({
+							title: this.text,
+							date: new Date(),
+							completed: false
+						})
 
-				if(/\S/.test(this.title)) {
-					todoCollection.add(newTodo)
-					this.title = ''
-				}
-
+						this.text = ''
+					}
+				})
 			}
 		}
 	}
 </script>
-
-<style scoped>
-	button {
-		padding: 0 0.5em;
-		height: 100%;
-		line-height: 50%;
-	}
-
-	input {
-		border: none;
-		outline: none;
-		background-color: transparent;
-		padding-left: 0.5em;
-		height: 100%;
-	}
-
-	.addTodoStyle {
-		display: flex;
-		background-color: #f1f1f1;
-		justify-content: center;
-    	align-items: center;
-		height: 2em;
-	    border-radius: 5px;
-	}
-</style>
