@@ -7,6 +7,7 @@
 				hide-details
 				append-outer-icon="mdi-plus"
 				@click:append-outer="addTodo"
+				:rules="[rules]"
 			></v-text-field>
 	</v-card>
 </template>
@@ -18,21 +19,26 @@
 		data() {
 			return {
 				text: '',
+				rules: value => {
+					return /\S/.test(value)
+				}
+			}
+		},
+		computed: {
+			notEmpty() {
+				return /\S/.test(this.text)
 			}
 		},
 		methods: {
 			addTodo() {
 				firebase.auth().onAuthStateChanged(user => {
 
-					if(user) {
+					if(user && this.notEmpty) {
 						firebase.firestore().collection('userCollection')
 						.doc(user.uid).collection('todos').doc().set({
 							title: this.text,
 							date: new Date(),
 							completed: false
-						})
-						.catch(err => {
-							console.log(err)
 						})
 
 						this.text = ''
