@@ -54,10 +54,7 @@
 					})
 				}
 			})
-		},
-		// destroyed() {
-		// 	this.todos = []
-		// }
+		}
 	}
 </script>
 
