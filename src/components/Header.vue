@@ -1,6 +1,6 @@
 <template>
 	<v-app-bar 
-		fixed
+		absolute
 		top 
 		color="transparent" 
 		flat
@@ -11,53 +11,25 @@
 			v-model="dark" 
 			inset
 			label="dark mode"
-			class="ma-0"
 		></v-switch>
-		<v-spacer></v-spacer>
-		<v-btn 
-			v-show="showSignOut" 
-			color="red" 
-			dark 
-			small
-			@click="signOut"
-		>Sign Out</v-btn>
 	</v-app-bar>
 </template>
 
 <script>
-	import firebase from '@/firebase.js'
-
 	export default {
 		data() {
 			return {
-				dark: false,
-				showSignOut: false
+				dark: localStorage.getItem('dark') === 'true',
 			}
 		},
 		watch: {
 			dark() {
-				this.$vuetify.theme.dark = this.dark
+				localStorage.setItem('dark', this.dark)
+				this.dark ? this.$vuetify.theme.isDark = true : this.$vuetify.theme.isDark = false
 			}
 		},
 		created() {
-			firebase.auth().onAuthStateChanged(user => {
-				if(user) {
-					this.showSignOut = true
-				} else {
-					this.showSignOut = false
-				}
-			})
-		},
-		methods: {
-			signOut() {
-				firebase.auth().signOut()
-					.then(() => {
-						this.$router.push('/')
-					})
-					.catch(err => {
-						console.log(err)
-					})
-			}
+			this.$vuetify.theme.isDark = this.dark
 		}
 	}
 </script>

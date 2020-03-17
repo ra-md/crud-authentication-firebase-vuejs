@@ -1,11 +1,21 @@
 <template>
 	<div>
+		<v-btn 
+			absolute
+			top
+			right
+			color="red" 
+			dark 
+			small
+			@click="signOut"
+			class="mt-n2 z-index-10"
+		>Sign Out</v-btn>
 		<AddTodo/>
-		<v-card height="400">
+		<v-card height="400" style="overflow: auto">
 			<div class="center-y" v-if="isLoading">
 				<v-progress-circular
-			    	indeterminate
 			    	color="primary"
+			    	indeterminate
 			    ></v-progress-circular>
 			</div>
 			<div v-else>
@@ -54,6 +64,18 @@
 					})
 				}
 			})
+		},
+		methods: {
+			signOut() {
+				firebase.auth().signOut()
+					.then(function(user) {
+						console.log(user)
+						this.$router.push('/')
+					})
+					.catch(function(error) {
+						console.log(error)
+					})
+			}
 		}
 	}
 </script>
@@ -63,5 +85,9 @@
 	    transform: translateY(-50%);
     	position: relative;
     	top: 50%;
+	}
+
+	.z-index-10 {
+		z-index: 10;
 	}
 </style>

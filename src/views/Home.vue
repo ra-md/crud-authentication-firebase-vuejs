@@ -2,7 +2,7 @@
 		<v-card class="pa-3">
 			<v-form class="mb-5">
 				<h2 class="mb-3">{{changeName}}</h2>
-				<p class="font-weight-light mb-3 red--text" v-show="errorMessageUser">{{ error.message }}</p>
+				<p class="font-weight-light mb-3 red--text" v-if="errorMessageUser">{{ error.message }}</p>
 				<v-text-field 
 					type="email" 
 					label="email" 
@@ -24,11 +24,26 @@
 					:rules="[rules.required, rules.counter]"
 					minlength="6"
 				></v-text-field>
-				<v-btn block @click="switchToSignup ? signUp() : signIn()">{{changeName}}</v-btn>
+				<v-btn 
+					block 
+					color="primary" 
+					@click="switchToSignup ? signUp() : signIn()"
+					:loading="isLodaing"
+				>{{changeName}}</v-btn>
 			</v-form>
 			<div class="grid">
-				<v-btn color="primary" @click="switchToSignup = false">Signin</v-btn>
-				<v-btn @click="switchToSignup = true">Signup</v-btn>
+				<v-btn 
+					:dark="!switchToSignup" 
+					outlined 
+					:class="{'secondary': !switchToSignup}" 
+					@click="switchToSignup = false"
+				>Signin</v-btn>
+				<v-btn 
+					:dark="switchToSignup" 
+					outlined
+					:class="{'secondary': switchToSignup}" 
+					@click="switchToSignup = true"
+				>Signup</v-btn>
 			</div>
 		</v-card>
 </template>
@@ -43,8 +58,8 @@
 				password: '',
 				error: {},
 				switchToSignup: false,
-				auth: firebase.auth(),
 				showPassword: false,
+				isLodaing: false,
 				rules: {
 		          required: value => !!value || 'Required.',
 		          counter: value => value.length >= 6 || 'Min 6 characters',
@@ -71,14 +86,16 @@
 		},
 		watch: {
 			switchToSignup() {
-				this.email = ''
-				this.password = ''
 				this.error = {}
+			},
+			error() {
+				this.isLodaing = false
 			}
 		},
 		methods: {
 			signIn() {
-				this.auth.signInWithEmailAndPassword(this.email, this.password)
+				this.isLodaing = true
+				firebase.auth().signInWithEmailAndPassword(this.email, this.password)
 				.then(() => {
 					this.$router.push('/todo')
 				})
@@ -87,9 +104,10 @@
 				})
 			},
 			signUp() {
-				this.auth.createUserWithEmailAndPassword(this.email, this.password)
-				.then(() => {
-					firebase.firestore().collection('userCollection').doc(this.auth.currentUser.uid).set({})
+				this.isLodaing = true
+				firebase.auth().createUserWithEmailAndPassword(this.email, this.password)
+				.then(user => {
+					firebase.firestore().collection('userCollection').doc(user.user.uid).set({})
 					this.$router.push('/todo')
 				})
 				.catch(error => {

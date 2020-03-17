@@ -7,6 +7,7 @@
 				hide-details
 				append-outer-icon="mdi-plus"
 				@click:append-outer="addTodo"
+				@keyup.enter="addTodo"
 				:rules="[rules]"
 			></v-text-field>
 	</v-card>
