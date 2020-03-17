@@ -36,7 +36,8 @@
 		data() {
 			return {
 				todos: [],
-				isLoading: true
+				isLoading: true,
+				unsubscribe: null
 			}
 		},
 		components: {
@@ -47,7 +48,7 @@
 			firebase.auth().onAuthStateChanged(user => {
 				if(user) {
 
-					firebase.firestore().collection('userCollection')
+					this.unsubscribe = firebase.firestore().collection('userCollection')
 					.doc(user.uid).collection('todos').orderBy('date', 'desc').onSnapshot(querySnapshot => {
 
 						this.todos = []
@@ -62,19 +63,16 @@
 							this.todos.push(obj)
 						})
 					})
+
+
 				}
 			})
 		},
 		methods: {
 			signOut() {
-				firebase.auth().signOut()
-					.then(function(user) {
-						console.log(user)
-						this.$router.push('/')
-					})
-					.catch(function(error) {
-						console.log(error)
-					})
+				this.unsubscribe()
+				firebase.auth().signOut().catch(error => console.log(error))
+				this.$router.push('/')
 			}
 		}
 	}

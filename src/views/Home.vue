@@ -21,7 +21,7 @@
 					outlined 
 					v-model="password"
 					:error-messages="passwordErrorMessage"
-					:rules="[rules.required, rules.counter]"
+					:rules="switchToSignup ? [rules.required, rules.counter] : []"
 					minlength="6"
 				></v-text-field>
 				<v-btn 

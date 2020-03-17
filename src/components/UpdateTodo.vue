@@ -6,6 +6,7 @@
 				v-model="title"
 				placeholder="Update todo"
 				hide-details
+				@keyup.enter="updateTodo"
 			></v-text-field>
 			<v-card-actions class="pa-0">
 				<v-spacer></v-spacer>
