@@ -10,12 +10,12 @@
 				</v-list-item-content>
 				<v-list-item-action class="ml-1">
 					<v-btn icon @click="openModal">
-						<v-icon>mdi-pencil-outline</v-icon>
+						<v-icon>edit</v-icon>
 					</v-btn>
 				</v-list-item-action>
 				<v-list-item-action class="ml-1">
 					<v-btn icon @click="deleteTodo">
-						<v-icon>mdi-trash-can-outline</v-icon>
+						<v-icon>delete</v-icon>
 					</v-btn>
 				</v-list-item-action>			
 			</v-list-item>

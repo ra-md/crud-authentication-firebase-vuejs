@@ -5,7 +5,7 @@
 				class="pa-2"
 				placeholder="add todo..."
 				hide-details
-				append-outer-icon="mdi-plus"
+				append-outer-icon="add"
 				@click:append-outer="addTodo"
 				@keyup.enter="addTodo"
 				:rules="[rules]"

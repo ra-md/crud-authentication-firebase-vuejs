@@ -13,16 +13,15 @@
 					:rules="[rules.required, rules.email]"
 				></v-text-field>
 				<v-text-field 
+					:append-icon="showPassword ? 'visibility' : 'visibility_off'"
 					:type="showPassword ? 'text' : 'password'"
-					:append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
-                                        suffix="show"
 					@click:append="showPassword = !showPassword"
 					label="password" 
 					dense 
 					outlined 
 					v-model="password"
 					:error-messages="passwordErrorMessage"
-					:rules="switchToSignup ? [rules.required, rules.counter] : []"
+					:rules="switchToSignup ? [rules.counter] : [rules.required]"
 					minlength="6"
 				></v-text-field>
 				<v-btn 
