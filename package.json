@@ -12,7 +12,7 @@
     "firebase": "^7.7.0",
     "vue": "^2.6.10",
     "vue-router": "^3.1.5",
-    "vuetify": "^2.2.12",
+    "vuetify": "^2.6.10",
     "vuetify-loader": "^1.4.3"
   },
   "devDependencies": {
